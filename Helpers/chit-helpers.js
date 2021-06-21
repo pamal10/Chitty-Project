@@ -11,5 +11,12 @@ addNewchit:(data)=>{
         resolve()
     })
 })
+},
+getAllchits: ()=>{
+    return new Promise(async(resolve,reject)=>{
+        await db.get().collection(collection.CHIT_COLLECTION).find().then((details)=>{
+            resolve(details)
+        })
+    })
 }
 }
