@@ -1,27 +1,39 @@
-<div class="container">
-<table class="table table-dark mt-5">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Chitty Number</th>
-      <th scope="col">Monthly Installment</th>
-      <th scope="col">Number Of Months</th>
-      <th scope="col">Date Of Chitty</th>
-      <th scope="col">Total Amount</th>
-    </tr>
-  </thead>
-  <tbody>
-      {{#each datails}}
-    <tr>
-      <th scope="row">1</th>
-      <td>{{details.ChittyNumber}}</td>
-      <td>{{details.MonthlyInstallment}}</td>
-      <td>{{details.NumberOfMonths}}</td>
-      <td>{{details.DateOfChitty}} Of Every Month</td>
-      <td>25000</td>
-    </tr>
-    {{/each}}
-   
-  </tbody>
-</table>
+<div class="container"> 
+  <table class="table table-dark mt-5" id="chitty">
+    
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Chitty Number</th>
+        <th scope="col">Monthly Installment</th>
+        <th scope="col">Number Of Months</th>
+
+        <th scope="col">Sala</th>
+        <th scope="col">Date Of Chitty</th>
+        <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each details}}
+
+      <tr>
+
+        <th scope="row">1</th>
+        <a href="">
+          <td>{{this.ChittyNumber}}</td>
+        </a>
+        <td>Rs {{this.MonthlyInstallment}}</td>
+        <td>{{this.NumberOfMonths}}</td>
+
+        <td>Rs {{this.Sala}}</td>
+        <td>{{this.DateOfChitty}} Of Every Month</td>
+        <th><a href="/admin/EditChit?id={{this._id}}" class="btn btn-warning">Edit Details<a href="/admin/DeleteChitty?id={{this._id}}" class="btn btn-danger ml-1" onclick="return confirm('Do you want to delete this Chitty ?')">Remove Chitty</a></a>
+        </th>
+
+      </tr>
+
+      {{/each}}
+
+    </tbody>
+  </table>
 </div>

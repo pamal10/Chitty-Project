@@ -6,14 +6,17 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   
-  chitHelpers.getAllchits().then((details) => {
-    console.log(details)
-    if(details.length==0){
-    res.send('hi')
+ chitHelpers.getAllchits().then((details) => {
+    detailsLength= Object.keys(details).length
+   
+    if(detailsLength==0){
+     res.send('hi')
+    
   }else{
-    res.render('admin/admin-home', { admin: true, details });
+    res.render('admin/admin-home', { admin: true ,details});
+   
   }
-  })
+ })
 
 });
 router.get('/AddnewChit', (req, res) => {
@@ -26,6 +29,22 @@ router.post('/AddnewChit', (req, res) => {
     res.redirect('/admin')
   })
 
+})
+router.get('/EditChit/',(req,res)=>{
+  chitHelpers.getOneChittyDetails(req.query.id).then((details)=>{
+    res.render('admin/edit-chitForm', {admin:true, details})
+  })
+})
+router.post('/EditChit/',(req,res)=>{
+  chitHelpers.UpdateChittyDetails(req.query.id,req.body).then(()=>{
+    res.redirect('/admin')
+  })
+})
+router.get('/DeleteChitty/',(req,res)=>{
+  chitHelpers.deleteChitty(req.query.id).then(()=>{
+    res.redirect('/admin')
+  
+  })
 })
 
 module.exports = router;
