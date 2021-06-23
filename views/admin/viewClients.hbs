@@ -1,5 +1,14 @@
 <div class="container">
-    <a href="/admin/addClient?id={{chittyNo}}" class="btn btn-success mt-3">Add Client</a>
+  <div class="col-xm-12 float-right">
+  <a href="/admin/addClient?id={{chittyNo}}" class="btn btn-success mt-3">Add Client</a>
+  </div>
+</div>
+<div>
+  <div class="col-xm-12">
+  <table class="table mt-3 table-dark w-25 float-left">
+  <td class="text-center ">Chitty Number  : {{chittyNo}}</td>
+  </table>
+  </div>
 </div>
 
 
@@ -9,13 +18,13 @@
 
       <thead>
         <tr>
-          
+
           <th scope="col">Chittaal Number</th>
           <th scope="col">Name</th>
           <th scope="col">Priced/Non-Priced</th>
           <th scope="col">Options</th>
 
-         
+
         </tr>
       </thead>
       <tbody>
@@ -23,18 +32,20 @@
 
         <tr>
 
-         
-         
-            <td><a  class="btn text-dark" href="/admin/viewClients?id={{this.ChittyNumber}}">{{this.chittaalNumber}}</a></td>
-         
+
+
+          <td><a class="btn text-dark" href="/admin/viewClientDetails?id={{this.ChittyNumber}}">{{this.chittaalNumber}}</a>
+          </td>
+
           <td>{{this.name}}</td>
           <td>{{this.pricedStatus}}</td>
 
-          
-          <th><a href="/admin/EditClient?id={{this._id}}" class="btn btn-warning">Edit Client<a
+
+          <td><a href="/admin/EditClient?id={{this._id}}" class="btn btn-warning">Edit Client<a
                 href="/admin/DeleteClient?id={{this._id}}" class="btn btn-danger ml-1"
-                onclick="return confirm('Do you want to remove {{this.name}} with Chittaal Number {{this.chittaalNumber}} ?')">Remove Client</a></a>
-          </th>
+                onclick="return confirm('Do you want to remove {{this.name}} with Chittaal Number {{this.chittaalNumber}} ?')">Remove
+                Client</a></a>
+          </td>
 
         </tr>
 
@@ -47,6 +58,8 @@
 
 <script>
   $(function () {
-    $('#clients').DataTable();
+    $('#clients').DataTable({
+      "order": [[0, "asc"]]
+    });
   });
 </script>

@@ -61,25 +61,35 @@ router.get('/addClient', (req, res) => {
 router.post('/addClient/', (req, res) => {
   chittyNo = req.query.id
   chitHelpers.addClient(chittyNo, req.body).then(() => {
-  res.redirect('/admin')
+    res.redirect('/admin/viewClients?id=' + chittyNo)
   })
 })
-router.get('/EditClient/',(req,res)=>{
-  clientId=req.query.id
-  chitHelpers.getClientDetails(clientId).then((details)=>{
-    res.render('admin/editClient',{admin:true, details})
+router.get('/EditClient/', (req, res) => {
+  clientId = req.query.id
+  chitHelpers.getClientDetails(clientId).then((details) => {
+    res.render('admin/editClient', { admin: true, details })
   })
 })
-router.post('/EditClient/',(req,res)=>{
-  clientId=req.query.id
-  chitHelpers.updateClient(clientId,req.body).then(()=>{
-    res.redirect('/admin')
+router.post('/EditClient/', (req, res) => {
+  clientId = req.query.id
+  chitHelpers.updateClient(clientId, req.body).then(() => {
+    res.redirect('/admin/viewClients?id=' + chittyNo)
   })
 })
-router.get('/DeleteClient/',(req,res)=>{
-  clientId=req.query.id
-  chitHelpers.removeClient(clientId).then(()=>{
-    res.redirect('/admin')
+router.get('/DeleteClient/', (req, res) => {
+  clientId = req.query.id
+  chitHelpers.removeClient(clientId).then(() => {
+    res.redirect('/admin/viewClients?id=' + chittyNo)
   })
+})
+router.get('/viewClientDetails/', (req, res) => {
+  chittyNo = req.query.id
+  chitHelpers.getSingleChittyDetails(chittyNo).then((details) => {
+    chitHelpers.getOneClientDetails(chittyNo).then((Details)=> {
+      res.render('admin/clientDetails', { admin: true, details,Details })
+
+    })
+})
+
 })
 module.exports = router;
