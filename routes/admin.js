@@ -51,7 +51,9 @@ router.get('/viewClients/', (req, res) => {
   chitHelpers.getClients(chittyNo).then((details) => {
 
 
+
     res.render('admin/viewClients', { admin: true, chittyNo, details })
+
   })
 })
 router.get('/addClient', (req, res) => {
@@ -85,11 +87,25 @@ router.get('/DeleteClient/', (req, res) => {
 router.get('/viewClientDetails/', (req, res) => {
   chittyNo = req.query.id
   chitHelpers.getSingleChittyDetails(chittyNo).then((details) => {
-    chitHelpers.getOneClientDetails(chittyNo).then((Details)=> {
-      res.render('admin/clientDetails', { admin: true, details,Details })
+    chitHelpers.getOneClientDetails(chittyNo).then((Details) => {
+      res.render('admin/clientDetails', { admin: true, details, Details })
 
     })
-})
+  })
 
+})
+router.get('/addInstallment/', (req, res) => {
+  clientId = req.query.id
+  console.log('ivide ethi');
+  console.log(clientId);
+  chitHelpers.getChittyDetailsWithclientId(clientId).then((chitDetails) => {
+    res.render('admin/addInstallment', {admin:true, clientId ,chitDetails})
+  })
+})
+router.post('/addInstallment/', (req, res) => {
+  clientId = req.query.id
+  chitHelpers.addInstallment(clienttId, req.body).then(() => {
+    res.redirect('/viewClientDetails?id=' + chittyNo)
+  })
 })
 module.exports = router;
