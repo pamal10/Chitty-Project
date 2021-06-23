@@ -30,35 +30,49 @@ module.exports = {
     },
     getOneChittyDetails: (id) => {
         return new Promise(async (resolve, reject) => {
-            await db.get().collection(collection.CHIT_COLLECTION).findOne({ _id: objectId(id)}).then((detail) => {
+            await db.get().collection(collection.CHIT_COLLECTION).findOne({ _id: objectId(id) }).then((detail) => {
                 resolve(detail)
             })
         })
     },
-    UpdateChittyDetails: (chittyId,data)=>{
-        
+    UpdateChittyDetails: (chittyId, data) => {
+
         let sala = parseInt(data.MonthlyInstallment) * parseInt(data.NumberOfMonths)
         data.Sala = sala
 
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.CHIT_COLLECTION).updateOne({_id:objectId(chittyId)},{
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.CHIT_COLLECTION).updateOne({ _id: objectId(chittyId) }, {
                 $set: {
-                    ChittyNumber : data.ChittyNumber,
-                    MonthlyInstallment : data.MonthlyInstallment,
-                    NumberOfMonths : data.NumberOfMonths,
-                    DateOfChitty : data.DateOfChitty,
-                    Sala : data.Sala
+                    ChittyNumber: data.ChittyNumber,
+                    MonthlyInstallment: data.MonthlyInstallment,
+                    NumberOfMonths: data.NumberOfMonths,
+                    DateOfChitty: data.DateOfChitty,
+                    Sala: data.Sala
                 }
-            }).then(()=>{
+            }).then(() => {
                 resolve()
             })
         })
     },
-    deleteChitty: (chittyId)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.CHIT_COLLECTION).removeOne({_id:objectId(chittyId)}).then(()=>{
+    deleteChitty: (chittyId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.CHIT_COLLECTION).removeOne({ _id: objectId(chittyId) }).then(() => {
                 resolve()
             })
+        })
+    },
+    addClient: (chittyNo, data) => {
+        return new Promise((resolve, reject) => {
+            data.ChittyNumber = chittyNo
+            db.get().collection(collection.CLIENTS_COLLECTION).insertOne(data).then(() => {
+                resolve()
+            })
+        })
+    },
+    getClients: (chittyNo) => {
+        return new Promise(async (resolve, reject) => {
+            let clients = await db.get().collection(collection.CLIENTS_COLLECTION).find({ ChittyNumber: chittyNo }).toArray()
+            resolve(clients)
         })
     }
 

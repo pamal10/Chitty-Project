@@ -4,7 +4,7 @@
 
       <thead>
         <tr>
-          <th scope="col">#</th>
+          
           <th scope="col">Chitty Number</th>
           <th scope="col">Monthly Installment</th>
           <th scope="col">Number Of Months</th>
@@ -19,10 +19,10 @@
 
         <tr>
 
-          <th scope="row">1</th>
-          <a href="/admin/clientDetail?id={{this._id}}">
-            <td>{{this.ChittyNumber}}</td>
-          </a>
+         
+         
+            <td><a  class="btn text-dark" href="/admin/viewClients?id={{this.ChittyNumber}}">{{this.ChittyNumber}}</a></td>
+         
           <td>Rs {{this.MonthlyInstallment}}</td>
           <td>{{this.NumberOfMonths}}</td>
 

@@ -46,5 +46,23 @@ router.get('/DeleteChitty/',(req,res)=>{
   
   })
 })
+router.get('/viewClients/',(req,res)=>{
+  chittyNo=req.query.id
+  chitHelpers.getClients(chittyNo).then((details)=>{
+
+  
+  res.render('admin/viewClients',{admin:true,chittyNo,details})
+})
+})
+router.get('/addClient',(req,res)=>{
+  chittyNo=req.query.id
+  res.render('admin/addClient',{admin:true,chittyNo})
+})
+router.post('/addClient/',(req,res)=>{
+  chittyNo=req.query.id
+  chitHelpers.addClient(chittyNo,req.body).then(()=>{
+    res.redirect('/admin/viewClients')
+  })
+})
 
 module.exports = router;
