@@ -74,6 +74,25 @@ module.exports = {
             let clients = await db.get().collection(collection.CLIENTS_COLLECTION).find({ ChittyNumber: chittyNo }).toArray()
             resolve(clients)
         })
+    },
+    getClientDetails: (clientId) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ _id: objectId(clientId) }).then((details) => {
+                resolve(details)
+            })
+        })
+    },
+    updateClient: (clientId, data) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.CLIENTS_COLLECTION).updateOne({ _id: objectId(clientId) }, {
+                $set: {
+                    chittaalNumber: data.chittaalNumber,
+                    name: data.name
+                }
+            }).then(() => {
+                resolve()
+            })
+        })
     }
 
 }
