@@ -76,4 +76,10 @@ router.post('/EditClient/',(req,res)=>{
     res.redirect('/admin')
   })
 })
+router.get('/DeleteClient/',(req,res)=>{
+  clientId=req.query.id
+  chitHelpers.removeClient(clientId).then(()=>{
+    res.redirect('/admin')
+  })
+})
 module.exports = router;

@@ -93,6 +93,13 @@ module.exports = {
                 resolve()
             })
         })
+    },
+    removeClient: (clientId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.CLIENTS_COLLECTION).removeOne({ _id: objectId(clientId) }).then(() => {
+                resolve()
+            })
+        })
     }
 
 }
