@@ -2,6 +2,7 @@ var db = require('../config/connection')
 var collection = require('../config/collections')
 var Promise = require('promise')
 var objectId = require('mongodb').ObjectID
+const { LengthRequired } = require('http-errors')
 
 module.exports = {
     addNewchit: (data) => {
@@ -178,8 +179,26 @@ module.exports = {
         return new Promise(async(resolve,reject)=>{
          await   db.get().collection(collection.CLIENTS_COLLECTION).findOne({_id:objectId(clientId)}).then(async(clientDetails)=>{
       let chittyNo= clientDetails.ChittyNumber
+      let clientId= clientDetails._id
      let detail= await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
+     let l=detail.length
+     console.log('hi');
+     console.log(l);
+   let data={}
+     for(let i=0;i<l;i++){
+         data={
+             installId:detail[i]._id,
+             clientId: clientId,
+             PaymentStatus: 'Pending'
+         }
+         console.log('loop over');
+         db.get().collection(collection.PAYMENT_COLLECTION).insertOne(data)
+         console.log('hello');
+        }
+        
+     
                    resolve(detail)
+                   console.log('kazhinj');
       })
         })
     }

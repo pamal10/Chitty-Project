@@ -90,7 +90,7 @@ router.get('/viewClientDetails/', async (req, res) => {
   let detail = await chitHelpers.getCompleteDetails(clientId)
   console.log(clientId);
   let details = await chitHelpers.getClientDetails(clientId)
-
+   
   let MonthlyInstallment = detail[0].MonthlyInstallment
   let NumberOfMonths = detail[0].NumberOfMonths
   let Sala = detail[0].Sala
@@ -103,7 +103,7 @@ router.get('/addInstallment/', (req, res) => {
   console.log('ivide ethi');
   chitHelpers.getLastInstallment(chittyNo).then((lastInstall) => {
 
-
+  
 
 
     let Month = new Date().toLocaleString('en-us', { month: 'long' });
