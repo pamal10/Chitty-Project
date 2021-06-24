@@ -97,10 +97,11 @@ router.get('/viewClientDetails/', (req, res) => {
 router.get('/addInstallment/', (req, res) => {
   chittyNo = req.query.id
   console.log('ivide ethi');
-
-
-  res.render('admin/addInstallment', { admin: true, chittyNo })
-
+  chitHelpers.getLastInstallment(chittyNo).then((lastInstall)=>{
+    let installment= parseInt(lastInstall.Installment)+1
+    
+  res.render('admin/addInstallment', { admin: true, chittyNo,installment })
+})
 })
 router.post('/addInstallment/', (req, res) => {
   chittyNo = req.query.id
