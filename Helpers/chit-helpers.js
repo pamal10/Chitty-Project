@@ -111,51 +111,67 @@ module.exports = {
     },
     getOneClientDetails: (chittyNo) => {
         return new Promise(async (resolve, reject) => {
-            await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ ChittyNumber:chittyNo }).then((details) => {
+            await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ ChittyNumber: chittyNo }).then((details) => {
                 resolve(details)
             })
         })
     },
-    addInstallment:(chittyNo,data)=>{
-        return new Promise(async(resolve,reject)=>{
-            let chitdetails=  await  db.get().collection(collection.CHIT_COLLECTION).findOne({ChittyNumber:chittyNo})
-            
-            data.ChittyNumber= chittyNo
-            let year=new Date().getFullYear()
-            data.Year=year
-            data.Date= chitdetails.DateOfChitty
-            
-            db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(()=>{
-         
-                db.get()
+    addInstallment: (chittyNo, data) => {
+        return new Promise(async (resolve, reject) => {
+            let year = new Date().getFullYear()
+            let chitdetails = await db.get().collection(collection.CHIT_COLLECTION).findOne({ ChittyNumber: chittyNo })
+
+            //for(let i=0;i<=l;i++){
+
+
+            //  
+
+            data.MonthlyInstallment = chitdetails.MonthlyInstallment,
+                data.NumberOfMonths = chitdetails.NumberOfMonths,
+                data.Sala = chitdetails.Sala
+
+            data.Date = chitdetails.DateOfChitty,
+
+                data.Year = year,
+
+
+                data.ChittyNumber = chitdetails.ChittyNumber,
+
+
+                data.Year = year
+            data.Date = chitdetails.DateOfChitty
+
+            db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(() => {
+
+               
                 resolve()
             })
         })
     },
-    getLastInstallment:(chittyNo)=>{
+    getLastInstallment: (chittyNo) => {
         console.log(chittyNo);
-        return new Promise(async(resolve,reject)=>{
-      let details=  await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
-      let lastInstall=details[details.length - 1]
-      console.log(lastInstall);
-      resolve(lastInstall)
+        return new Promise(async (resolve, reject) => {
+            let details = await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ ChittyNumber: chittyNo }).toArray()
+            let lastInstall = details[details.length - 1]
+            console.log(lastInstall);
+            resolve(lastInstall)
         })
     },
-    editInstallment:(installId,data)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({_id:objectId(installId)},{
-                $set:{
+    editInstallment: (installId, data) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({ _id: objectId(installId) }, {
+                $set: {
                     Installment: data.Installment,
                     Amount: data.Amount,
                     Month: data.Month,
-                    ChittyNumber:data.ChittyNumber,
-                    Year:data.Year
+                    ChittyNumber: data.ChittyNumber,
+                    Year: data.Year
                 }
-            }).then(()=>{
+            }).then(() => {
                 resolve()
             })
         })
     }
-    
+
 
 }

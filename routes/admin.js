@@ -9,13 +9,13 @@ router.get('/', function (req, res, next) {
   chitHelpers.getAllchits().then((details) => {
     detailsLength = Object.keys(details).length
 
-    if (detailsLength == 0) {
-      res.send('hi')
+    //if (detailsLength == 0) {
+     // res.send('hi')
 
-    } else {
+ //   } else {
       res.render('admin/admin-home', { admin: true, details });
 
-    }
+  //  }
   })
 
 });
