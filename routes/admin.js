@@ -107,6 +107,7 @@ router.get('/addInstallment/', (req, res) => {
 
 
     let Month = new Date().toLocaleString('en-us', { month: 'long' });
+    let Year =new Date().getFullYear()
     console.log(Month);
     // if (Object.keys(inst).length === 0 && inst.constructor === Object) {
     if (typeof lastInstall == "undefined") {
@@ -116,7 +117,7 @@ router.get('/addInstallment/', (req, res) => {
     } else {
       let inst = lastInstall.Installment
       let installment = parseInt(inst) + 1
-      res.render('admin/addInstallment', { admin: true, chittyNo, installment, install: true, Month })
+      res.render('admin/addInstallment', { admin: true, chittyNo, installment, install: true,Year, Month })
     }
   })
 })

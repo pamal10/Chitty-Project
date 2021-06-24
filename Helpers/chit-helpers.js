@@ -120,7 +120,7 @@ module.exports = {
     },
     addInstallment: (chittyNo, data) => {
         return new Promise(async (resolve, reject) => {
-            let year = new Date().getFullYear()
+            
             let chitdetails = await db.get().collection(collection.CHIT_COLLECTION).findOne({ ChittyNumber: chittyNo })
 
             //for(let i=0;i<=l;i++){
@@ -134,13 +134,13 @@ module.exports = {
 
             data.Date = chitdetails.DateOfChitty,
 
-                data.Year = year,
+                
 
 
                 data.ChittyNumber = chitdetails.ChittyNumber,
 
 
-                data.Year = year
+                
             data.Date = chitdetails.DateOfChitty
 
             db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(() => {
