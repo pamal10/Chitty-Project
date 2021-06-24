@@ -90,6 +90,7 @@ router.get('/viewClientDetails/', async (req, res) => {
   let detail = await chitHelpers.getCompleteDetails(clientId)
   console.log(clientId);
   let details = await chitHelpers.getClientDetails(clientId)
+ 
    
   let MonthlyInstallment = detail[0].MonthlyInstallment
   let NumberOfMonths = detail[0].NumberOfMonths

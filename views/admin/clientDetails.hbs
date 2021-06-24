@@ -43,11 +43,12 @@
     <tr>
       <th scope="row">{{this.Installment}}</th>
       <td>{{this.Amount}}</td>
-      <td ><a class="btn text-danger" href="/admin/changePaymentstatus?id={{details._id}}">Pending</a></td> 
+      <td ><a class="btn text-danger" href="/admin/changePaymentstatus?id={{details._id}}">{{this.Status}}</a></td> 
       <td>{{this.Date}} {{this.Month}} {{this.Year}}</td>
-      {{/each}}
+     
       
     </tr>
+     {{/each}}
     
     
    

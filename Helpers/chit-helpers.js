@@ -175,11 +175,12 @@ module.exports = {
             })
         })
     },
-    getCompleteDetails:(clientId)=>{
+    getCompleteDetails:(clientID)=>{
         return new Promise(async(resolve,reject)=>{
-         await   db.get().collection(collection.CLIENTS_COLLECTION).findOne({_id:objectId(clientId)}).then(async(clientDetails)=>{
+         await   db.get().collection(collection.CLIENTS_COLLECTION).findOne({_id:objectId(clientID)}).then(async(clientDetails)=>{
       let chittyNo= clientDetails.ChittyNumber
-      let clientId= clientDetails._id
+      let clientID= clientDetails._id
+      
      let detail= await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
      let l=detail.length
      console.log('hi');
@@ -188,7 +189,7 @@ module.exports = {
      for(let i=0;i<l;i++){
          data={
              installId:detail[i]._id,
-             clientId: clientId,
+             clientId: clientID,
              PaymentStatus: 'Pending'
          }
          console.log('loop over');
@@ -200,6 +201,14 @@ module.exports = {
                    resolve(detail)
                    console.log('kazhinj');
       })
+        })
+    },
+    getPaymentStatus:(clientID)=>{
+        return new Promise(async(resolve,reject)=>{
+          await  db.get().collection(collection.PAYMENT_COLLECTION).findOne({clientId:clientID}).then((detail)=>{
+              let Status= detail.PaymentStatus
+              resolve(Status)
+          })
         })
     }
     
