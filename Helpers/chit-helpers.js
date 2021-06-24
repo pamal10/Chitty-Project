@@ -64,6 +64,7 @@ module.exports = {
     addClient: (chittyNo, data) => {
         return new Promise((resolve, reject) => {
             data.ChittyNumber = chittyNo
+            data.PaymentStatus = 'Pending'
             db.get().collection(collection.CLIENTS_COLLECTION).insertOne(data).then(() => {
                 resolve()
             })
@@ -78,6 +79,7 @@ module.exports = {
     getClientDetails: (clientId) => {
         return new Promise(async (resolve, reject) => {
             await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ _id: objectId(clientId) }).then((details) => {
+                console.log(details);
                 resolve(details)
             })
         })
@@ -171,7 +173,17 @@ module.exports = {
                 resolve()
             })
         })
+    },
+    getCompleteDetails:(clientId)=>{
+        return new Promise(async(resolve,reject)=>{
+         await   db.get().collection(collection.CLIENTS_COLLECTION).findOne({_id:objectId(clientId)}).then(async(clientDetails)=>{
+      let chittyNo= clientDetails.ChittyNumber
+     let detail= await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
+                   resolve(detail)
+      })
+        })
     }
+    
 
 
 }

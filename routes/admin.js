@@ -10,12 +10,12 @@ router.get('/', function (req, res, next) {
     detailsLength = Object.keys(details).length
 
     //if (detailsLength == 0) {
-     // res.send('hi')
+    // res.send('hi')
 
- //   } else {
-      res.render('admin/admin-home', { admin: true, details });
+    //   } else {
+    res.render('admin/admin-home', { admin: true, details });
 
-  //  }
+    //  }
   })
 
 });
@@ -84,35 +84,39 @@ router.get('/DeleteClient/', (req, res) => {
     res.redirect('/admin/viewClients?id=' + chittyNo)
   })
 })
-router.get('/viewClientDetails/', (req, res) => {
-  chittyNo = req.query.id
-  chitHelpers.getSingleChittyDetails(chittyNo).then((details) => {
-    chitHelpers.getOneClientDetails(chittyNo).then((Details) => {
-      res.render('admin/clientDetails', { admin: true, details, Details })
+router.get('/viewClientDetails/', async (req, res) => {
+  console.log('hi ' + req.query.id)
+  clientId = req.query.id
+  let detail = await chitHelpers.getCompleteDetails(clientId)
+  console.log(clientId);
+  let details = await chitHelpers.getClientDetails(clientId)
 
-    })
-  })
+  let MonthlyInstallment = detail[0].MonthlyInstallment
+  let NumberOfMonths = detail[0].NumberOfMonths
+  let Sala = detail[0].Sala
+  res.render('admin/clientDetails', { admin: true, detail, details, MonthlyInstallment, NumberOfMonths, Sala })
+
 
 })
 router.get('/addInstallment/', (req, res) => {
   chittyNo = req.query.id
   console.log('ivide ethi');
   chitHelpers.getLastInstallment(chittyNo).then((lastInstall) => {
-    
-    
-   
+
+
+
 
     let Month = new Date().toLocaleString('en-us', { month: 'long' });
     console.log(Month);
-   // if (Object.keys(inst).length === 0 && inst.constructor === Object) {
-    if (typeof lastInstall == "undefined"){
+    // if (Object.keys(inst).length === 0 && inst.constructor === Object) {
+    if (typeof lastInstall == "undefined") {
       console.log('hello');
 
-      res.render('admin/addInstallment', { admin: true, chittyNo,install:false, Month })
+      res.render('admin/addInstallment', { admin: true, chittyNo, install: false, Month })
     } else {
-      let inst=lastInstall.Installment
+      let inst = lastInstall.Installment
       let installment = parseInt(inst) + 1
-      res.render('admin/addInstallment', { admin: true, chittyNo, installment,install:true, Month })
+      res.render('admin/addInstallment', { admin: true, chittyNo, installment, install: true, Month })
     }
   })
 })
