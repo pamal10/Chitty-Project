@@ -128,6 +128,30 @@ module.exports = {
             })
         })
     },
+    getLastInstallment:(chittyNo)=>{
+        console.log(chittyNo);
+        return new Promise(async(resolve,reject)=>{
+      let details=  await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
+      let lastInstall=details[details.length - 1]
+      console.log(lastInstall);
+      resolve(lastInstall)
+        })
+    },
+    editInstallment:(installId,data)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({_id:objectId(installId)},{
+                $set:{
+                    Installment: data.Installment,
+                    Amount: data.Amount,
+                    Month: data.Month,
+                    ChittyNumber:data.ChittyNumber,
+                    Year:data.Year
+                }
+            }).then(()=>{
+                resolve()
+            })
+        })
+    }
     
 
 }

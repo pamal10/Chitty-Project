@@ -97,14 +97,27 @@ router.get('/viewClientDetails/', (req, res) => {
 router.get('/addInstallment/', (req, res) => {
   chittyNo = req.query.id
   console.log('ivide ethi');
-  
-  
-    res.render('admin/addInstallment', {admin:true, chittyNo})
-  
+
+
+  res.render('admin/addInstallment', { admin: true, chittyNo })
+
 })
 router.post('/addInstallment/', (req, res) => {
   chittyNo = req.query.id
   chitHelpers.addInstallment(chittyNo, req.body).then(() => {
+    res.redirect('/admin/viewClients?id=' + chittyNo)
+  })
+})
+router.get('/editInstall/', (req, res) => {
+  chittyNo = req.query.id
+  console.log('ing poru');
+  chitHelpers.getLastInstallment(chittyNo).then((lastInstall) => {
+    res.render('admin/editInstallment', { admin: true, lastInstall })
+  })
+})
+router.post('/editInstall', (req, res) => {
+  installId = req.query.id
+  chitHelpers.editInstallment(installId,req.body).then(() => {
     res.redirect('/admin/viewClients?id=' + chittyNo)
   })
 })
