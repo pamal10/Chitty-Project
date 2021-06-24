@@ -117,13 +117,17 @@ module.exports = {
         })
     },
     addInstallment:(chittyNo,data)=>{
-        return new Promise((resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
+            let chitdetails=  await  db.get().collection(collection.CHIT_COLLECTION).findOne({ChittyNumber:chittyNo})
             
             data.ChittyNumber= chittyNo
             let year=new Date().getFullYear()
             data.Year=year
+            data.Date= chitdetails.DateOfChitty
             
             db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(()=>{
+         
+                db.get()
                 resolve()
             })
         })
