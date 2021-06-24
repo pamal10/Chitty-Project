@@ -116,29 +116,18 @@ module.exports = {
             })
         })
     },
-    addInstallment:(clientId,data)=>{
+    addInstallment:(chittyNo,data)=>{
         return new Promise((resolve,reject)=>{
-            data.paymentStatus= 'Pending'
+            
+            data.ChittyNumber= chittyNo
             let year=new Date().getFullYear()
             data.Year=year
-            data.client=clientId
+            
             db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(()=>{
                 resolve()
             })
         })
     },
-    getChittyDetailsWithclientId:(clientId)=>{
-        console.log('ivideyum ethi');
-        console.log(clientId);
-        return new Promise(async(resolve,reject)=>{
-           await db.get().collection(collection.CLIENTS_COLLECTION).findOne({_id:objectId(clientId)}).then(async(details)=>{
-                let chittyNo=details.ChittyNumber
-                console.log(chittyNo);
-          let chitDetails=  await  db.get().collection(collection.CHIT_COLLECTION).findOne({ChittyNumber:chittyNo})
-                    resolve(chitDetails)
-               
-            })
-        })
-    }
+    
 
 }

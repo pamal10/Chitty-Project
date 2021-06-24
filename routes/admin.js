@@ -95,17 +95,17 @@ router.get('/viewClientDetails/', (req, res) => {
 
 })
 router.get('/addInstallment/', (req, res) => {
-  clientId = req.query.id
+  chittyNo = req.query.id
   console.log('ivide ethi');
-  console.log(clientId);
-  chitHelpers.getChittyDetailsWithclientId(clientId).then((chitDetails) => {
-    res.render('admin/addInstallment', {admin:true, clientId ,chitDetails})
-  })
+  
+  
+    res.render('admin/addInstallment', {admin:true, chittyNo})
+  
 })
 router.post('/addInstallment/', (req, res) => {
-  clientId = req.query.id
-  chitHelpers.addInstallment(clienttId, req.body).then(() => {
-    res.redirect('/viewClientDetails?id=' + chittyNo)
+  chittyNo = req.query.id
+  chitHelpers.addInstallment(chittyNo, req.body).then(() => {
+    res.redirect('/admin/viewClients?id=' + chittyNo)
   })
 })
 module.exports = router;
