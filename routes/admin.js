@@ -97,11 +97,24 @@ router.get('/viewClientDetails/', (req, res) => {
 router.get('/addInstallment/', (req, res) => {
   chittyNo = req.query.id
   console.log('ivide ethi');
-  chitHelpers.getLastInstallment(chittyNo).then((lastInstall)=>{
-    let installment= parseInt(lastInstall.Installment)+1
+  chitHelpers.getLastInstallment(chittyNo).then((lastInstall) => {
     
-  res.render('admin/addInstallment', { admin: true, chittyNo,installment })
-})
+    
+   
+
+    let Month = new Date().toLocaleString('en-us', { month: 'long' });
+    console.log(Month);
+   // if (Object.keys(inst).length === 0 && inst.constructor === Object) {
+    if (typeof lastInstall == "undefined"){
+      console.log('hello');
+
+      res.render('admin/addInstallment', { admin: true, chittyNo,install:false, Month })
+    } else {
+      let inst=lastInstall.Installment
+      let installment = parseInt(inst) + 1
+      res.render('admin/addInstallment', { admin: true, chittyNo, installment,install:true, Month })
+    }
+  })
 })
 router.post('/addInstallment/', (req, res) => {
   chittyNo = req.query.id
@@ -118,7 +131,7 @@ router.get('/editInstall/', (req, res) => {
 })
 router.post('/editInstall', (req, res) => {
   installId = req.query.id
-  chitHelpers.editInstallment(installId,req.body).then(() => {
+  chitHelpers.editInstallment(installId, req.body).then(() => {
     res.redirect('/admin/viewClients?id=' + chittyNo)
   })
 })
