@@ -51,9 +51,9 @@
       
       <td><a class="btn text-danger" onclick="return confirm('Changing the Payment Status to Paid')" href="/admin/changePaymentstatus?id={{this._id}}">{{this.PaymentStatus}}</a></td>
         {{/ifEquals}}
-        {{#ifnotEquals this.PaymentStatus "Paid"}}
+        {{#ifEquals this.PaymentStatus "Paid"}}
       <td> <a class="btn text-success" onclick="return confirm('Changing the Payment Status to Pending')" href="/admin/changePaystatus?id={{this._id}}">{{this.PaymentStatus}}</a></td>
-     {{/ifnotEquals}}
+     {{/ifEquals}}
       
       <td>{{this.Date}} {{this.Month}} {{this.Year}}</td>
      

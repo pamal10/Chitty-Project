@@ -45,9 +45,9 @@
           {{#ifEquals this.PricedStatus "Non-Priced"}}
           <td><a class="btn text-dark" onclick="return confirm('Changing To Priced')" href="/admin/changetoPriced?id={{this._id}}">{{this.PricedStatus}}</a></td>
           {{/ifEquals}}
-          {{#ifnotEquals this.PricedStatus "Priced"}}
+          {{#ifEquals this.PricedStatus "Priced"}}
           <td><a class="btn text-success" onclick="return confirm('Changing To Non-Priced')" href="/admin/changetononPriced?id={{this._id}}">{{this.PricedStatus}}</a></td>
-          {{/ifnotEquals}}
+          {{/ifEquals}}
 
           <td><a href="/admin/EditClient?id={{this._id}}" class="btn btn-warning">Edit Client<a
                 href="/admin/DeleteClient?id={{this._id}}" class="btn btn-danger ml-1"

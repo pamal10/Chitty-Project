@@ -1,72 +1,80 @@
 <div class="container">
-   
-    <div>
-        <h4 class="mt-4"><strong>Welcome {{clientDetails.name}} !</strong></h4>
-    </div>
 
-    <table  class="table table-dark table-striped mt-5">
-        <thead>
-            <tr>
-                <th scope="col">Chitty Number</th>
-                <th scope="col">Chittaal Number</th>
-                <th scope="col">Monthly Installment</th>
-                <th scope="col">Number Of Months</th>
-                <th scope="col">Sala</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{chitDetails.ChittyNumber}}</td>
-                <td>{{clientDetails.chittaalNumber}}</td>
-                <td>Rs {{chitDetails.MonthlyInstallment}}</td>
-                <td>{{chitDetails.NumberOfMonths}}</td>
-                <td>Rs {{chitDetails.Sala}}</td>
-            </tr>
-        </tbody>
+  <div>
+    <h4 class="mt-4"><strong>Welcome {{clientDetails.name}} !</strong></h4>
+  </div>
 
-    </table>
-</div>
-<div class="mt-4" >
-    <table id="install" class="table">
-  <thead class="thead-dark">
-    
-    <tr>
-      <th scope="col">Installment</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Payment Status</th>
-      <th scope="col">Due Date</th>
-      
-    </tr>
-  </thead>
-     
 
-  <tbody>
-    {{#each instdetails}}
-   
-    <tr>
-      <th scope="row">{{this.Installment}}</th>
-      <td>Rs {{this.Amount}}</td>
-      
-      
-      {{#ifEquals  this.PaymentStatus "Pending"}}
-      
-      <td class=" text-danger">{{this.PaymentStatus}}</td>
+  <table class="table table-dark table-striped mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Chitty Number</th>
+        <th scope="col">Chittaal Number</th>
+        <th scope="col">Monthly Installment</th>
+        <th scope="col">Number Of Months</th>
+        <th scope="col">Sala</th>
+        <th scope="col">Priced/Non-Priced</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{chitDetails.ChittyNumber}}</td>
+        <td>{{clientDetails.chittaalNumber}}</td>
+        <td>Rs {{chitDetails.MonthlyInstallment}}</td>
+        <td>{{chitDetails.NumberOfMonths}}</td>
+        <td>Rs {{chitDetails.Sala}}</td>
+        {{#ifEquals clientDetails.PricedStatus "Non-Priced"}}
+        <td>{{clientDetails.PricedStatus}}</td>
         {{/ifEquals}}
-        {{#ifnotEquals this.PaymentStatus "Paid"}}
-      <td class=" text-success">{{this.PaymentStatus}}</td>
-     {{/ifnotEquals}}
-      
-      <td>{{this.Date}} {{this.Month}} {{this.Year}}</td>
-     
-      
-    </tr>
-     {{/each}}
-    
-    
-   
-  </tbody>
-    
-</table>
+        {{#ifEquals clientDetails.PricedStatus "Priced"}}
+        <td class="text-success">{{clientDetails.PricedStatus}}</td>
+        {{/ifEquals}}
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+<div class="mt-4">
+  <table id="install" class="table">
+    <thead class="thead-dark">
+
+      <tr>
+        <th scope="col">Installment</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Payment Status</th>
+        <th scope="col">Due Date</th>
+
+      </tr>
+    </thead>
+
+
+    <tbody>
+      {{#each instdetails}}
+
+      <tr>
+        <th scope="row">{{this.Installment}}</th>
+        <td>Rs {{this.Amount}}</td>
+
+
+        {{#ifEquals this.PaymentStatus "Pending"}}
+
+        <td class=" text-danger">{{this.PaymentStatus}}</td>
+        {{/ifEquals}}
+        {{#ifEquals this.PaymentStatus "Paid"}}
+        <td class=" text-success">{{this.PaymentStatus}}</td>
+        {{/ifEquals}}
+
+        <td>{{this.Date}} {{this.Month}} {{this.Year}}</td>
+
+
+      </tr>
+      {{/each}}
+
+
+
+    </tbody>
+
+  </table>
 </div>
 
 
