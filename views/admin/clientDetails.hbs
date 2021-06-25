@@ -47,7 +47,13 @@
       <th scope="row">{{this.Installment}}</th>
       <td>Rs {{this.Amount}}</td>
       
-      <td ><a class="btn text-danger" href="/admin/changePaymentstatus?id={{this._id}}">{{this.PaymentStatus}}</a></td> 
+      {{#ifEquals  this.PaymentStatus "Pending"}}
+      
+      <td><a class="btn text-danger" onclick="return confirm('Changing the Payment Status to Paid')" href="/admin/changePaymentstatus?id={{this._id}}">{{this.PaymentStatus}}</a></td>
+        {{/ifEquals}}
+        {{#ifnotEquals this.PaymentStatus "Paid"}}
+      <td> <a class="btn text-success" onclick="return confirm('Changing the Payment Status to Pending')" href="/admin/changePaystatus?id={{this._id}}">{{this.PaymentStatus}}</a></td>
+     {{/ifnotEquals}}
       
       <td>{{this.Date}} {{this.Month}} {{this.Year}}</td>
      
@@ -68,4 +74,5 @@
       "order": [[0, "asc"]]
     });
   });
+
 </script>

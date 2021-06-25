@@ -2,6 +2,14 @@ var express = require('express');
 const { getPaymentStatus } = require('../Helpers/chit-helpers');
 const chitHelpers = require('../Helpers/chit-helpers');
 var router = express.Router();
+var Handlebars=require('handlebars')
+Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+Handlebars.registerHelper('ifnotEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+
 
 
 /* GET users listing. */
@@ -100,20 +108,7 @@ router.get('/viewClientDetails/', async (req, res) => {
   let Sala=chitDetails.Sala
   
   console.log('hmm');
-  //if(typeof detail=="undefined"){
-   // console.log('ayyo');
   
-    
-  //   console.log(chitDetails);
-   
-   // res.render('admin/clientDetails', { admin: true, details, MonthlyInstallment, NumberOfMonths, Sala  })
- // }else{
-
- // let MonthlyInstallment = detail[0].MonthlyInstallment
-  //let NumberOfMonths = detail[0].NumberOfMonths
-  //let Sala = detail[0].Sala
- // console.log('gethiked');
- 
     
 
   res.render('admin/clientDetails', { admin: true, detail, details, MonthlyInstallment, NumberOfMonths, Sala })
@@ -165,8 +160,14 @@ router.post('/editInstall/', (req, res) => {
 })
 router.get('/changePaymentStatus/',(req,res)=>{
   instId=req.query.id
-  chitHelpers.changePaymentStatus(clientId).then(()=>{
-    res.redirect('/viewClientDetails?id='+clientId)
+  chitHelpers.changePaymentStatus(instId).then(()=>{
+    res.redirect('/admin/viewClientDetails?id='+clientId)
+  })
+})
+router.get('/changePayStatus/',(req,res)=>{
+  instId=req.query.id
+  chitHelpers.changePayStatus(instId).then(()=>{
+    res.redirect('/admin/viewClientDetails?id='+clientId)
   })
 })
 module.exports = router;

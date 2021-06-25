@@ -213,31 +213,30 @@ module.exports = {
      
         })
     },
-    getPaymentStatus:(clientID)=>{
-        return new Promise(async(resolve,reject)=>{
-          await  db.get().collection(collection.PAYMENT_COLLECTION).findOne({clientId:clientID}).then((detail)=>{
-              let Status= detail.PaymentStatus
-              resolve(Status)
-          })
+   changePaymentStatus:(instId)=>{
+       return new Promise((resolve,reject)=>{
+           db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({_id:objectId(instId)},{
+               $set:{
+                   PaymentStatus: 'Paid'
+               }
+           }).then(()=>{
+               resolve()
+           })
+       })
+   },
+   changePayStatus:(instId)=>{
+    return new Promise((resolve,reject)=>{
+        db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({_id:objectId(instId)},{
+            $set:{
+                PaymentStatus: 'Pending'
+            }
+        }).then(()=>{
+            resolve()
         })
-    },
-    changePaymentStatus:(instId)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.PAYMENT_COLLECTION).updateOne({installId:objectId(instId)},{
-                $set: {
-                    PaymentStatus: 'Paid'
+    })
+},
 
-                }
-                
-            }).then(()=>{
-                console.log('eduth');
-                resolve()
-            })
-                
-        })
-    },
-
-
+   
 
 
 
