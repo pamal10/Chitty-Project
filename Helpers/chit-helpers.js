@@ -80,6 +80,8 @@ module.exports = {
     getClientDetails: (clientId) => {
         return new Promise(async (resolve, reject) => {
             await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ _id: objectId(clientId) }).then((details) => {
+                
+
                 console.log(details);
                 resolve(details)
             })
@@ -107,7 +109,10 @@ module.exports = {
     },
     getSingleChittyDetails: (chittyNo) => {
         return new Promise(async (resolve, reject) => {
+            console.log(chittyNo);
+            console.log('pull');
             await db.get().collection(collection.CHIT_COLLECTION).findOne({ ChittyNumber: chittyNo }).then((detail) => {
+                console.log(detail);
                 resolve(detail)
             })
         })
@@ -146,11 +151,15 @@ module.exports = {
             console.log('avasanam');
 
             db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(async(instDetails) => {
-                console.log('enthond');
-                let length= instDetails.length
-                console.log('ayyi');
-                console.log(instDetails);
+                let installment=instDetails.ops[0].Installment
+                let amount =instDetails.ops[0].Amount
                 let instId=instDetails.ops[0]._id
+                let month=instDetails.ops[0].Month
+                let year=instDetails.ops[0].Year
+                let date=instDetails.ops[0].Date
+                let monthly=instDetails.ops[0].MonthlyInstallment
+                let tmonths=instDetails.ops[0].NumberOfMonths
+                let sala=instDetails.ops[0].Sala
                 let detail= await db.get().collection(collection.CLIENTS_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
                 let l=detail.length
                
@@ -161,6 +170,14 @@ module.exports = {
                     data={
                         installId:instId,
                         clientId: detail[i]._id,
+                        Installment:installment,
+                        Amount:amount,
+                        Month:month,
+                        Year:year,
+                        Date:date,
+                        MonthlyInstallment:monthly,
+                        NumberOfMonths:tmonths,
+                        Sala:sala,
                         PaymentStatus: 'Pending'
                     }
                     console.log('loop over');
@@ -197,19 +214,17 @@ module.exports = {
         })
     },
     getCompleteDetails:(clientID)=>{
-        return new Promise(async(resolve,reject)=>{
-         await   db.get().collection(collection.CLIENTS_COLLECTION).findOne({_id:objectId(clientID)}).then(async(clientDetails)=>{
-      let chittyNo= clientDetails.ChittyNumber
-      let clientID= clientDetails._id
-      
-     let detail= await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
+      return new Promise(async(resolve,reject)=>{
+     
+      console.log('Enthuv'+clientID);
+     let detail=await db.get().collection(collection.PAYMENT_COLLECTION).find({clientId:objectId(clientID)}).toArray()
     
-        
+     console.log(detail);
+     console.log('kazhinj');
      
                    resolve(detail)
-                   console.log(detail);
-                   console.log('kazhinj');
-      })
+                
+     
         })
     },
     getPaymentStatus:(clientID)=>{
@@ -233,6 +248,22 @@ module.exports = {
                 resolve()
             })
                 
+        })
+    },
+
+
+
+
+
+
+
+    getUserDetails:(data)=>{
+        return new Promise((resolve,reject)=>{
+            let chittyNo=data.ChittyNumber
+            let chittaalNo=data.chittaalNo
+            db.get().collection(collection.CLIENTS_COLLECTION).findOne({ChittyNumber:chittyNo,chittaalNumber:chittaalNo}).then((clientDetails)=>{
+                
+            })
         })
     }
     

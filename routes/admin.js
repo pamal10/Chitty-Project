@@ -91,16 +91,33 @@ router.get('/viewClientDetails/', async (req, res) => {
   let detail = await chitHelpers.getCompleteDetails(clientId)
   console.log(clientId);
   let details = await chitHelpers.getClientDetails(clientId)
+  let chittyNo=details.ChittyNumber
+  console.log(chittyNo);
+  let chitDetails= await chitHelpers.getSingleChittyDetails(chittyNo)
+  console.log(chitDetails);
+  let MonthlyInstallment=chitDetails.MonthlyInstallment
+  let NumberOfMonths=chitDetails.NumberOfMonths
+  let Sala=chitDetails.Sala
+  
   console.log('hmm');
-  let MonthlyInstallment = detail[0].MonthlyInstallment
-  let NumberOfMonths = detail[0].NumberOfMonths
-  let Sala = detail[0].Sala
+  if(typeof detail=="undefined"){
+    console.log('ayyo');
+  
+    
+     console.log(chitDetails);
+   
+    res.render('admin/clientDetails', { admin: true, details, MonthlyInstallment, NumberOfMonths, Sala  })
+  }else{
+
+ // let MonthlyInstallment = detail[0].MonthlyInstallment
+  //let NumberOfMonths = detail[0].NumberOfMonths
+  //let Sala = detail[0].Sala
   console.log('gethiked');
  
     
 
   res.render('admin/clientDetails', { admin: true, detail, details, MonthlyInstallment, NumberOfMonths, Sala })
-
+}
 
 })
 router.get('/addInstallment/', (req, res) => {
