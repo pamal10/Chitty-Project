@@ -65,7 +65,7 @@ module.exports = {
     addClient: (chittyNo, data) => {
         return new Promise((resolve, reject) => {
             data.ChittyNumber = chittyNo
-            data.PaymentStatus = 'Pending'
+            
             db.get().collection(collection.CLIENTS_COLLECTION).insertOne(data).then(() => {
                 resolve()
             })
@@ -257,15 +257,22 @@ module.exports = {
 
 
 
+
+
     getUserDetails:(data)=>{
-        return new Promise((resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
             let chittyNo=data.ChittyNumber
-            let chittaalNo=data.chittaalNo
-            db.get().collection(collection.CLIENTS_COLLECTION).findOne({ChittyNumber:chittyNo,chittaalNumber:chittaalNo}).then((clientDetails)=>{
-                
+            let chittaalNo=data.chittaalNumber
+            console.log(chittyNo);
+            console.log(chittaalNo);
+            
+          await  db.get().collection(collection.CLIENTS_COLLECTION).findOne({ChittyNumber:chittyNo,chittaalNumber:chittaalNo}).then((clientDetails)=>{
+              console.log(clientDetails);
+                resolve(clientDetails)
             })
         })
-    }
+    },
+    
     
 
 

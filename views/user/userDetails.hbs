@@ -1,7 +1,7 @@
 <div class="container">
    
     <div>
-        <h4 class="mt-4"><strong>{{details.name}}</strong></h4>
+        <h4 class="mt-4"><strong>Welcome {{clientDetails.name}} !</strong></h4>
     </div>
 
     <table  class="table table-dark table-striped mt-5">
@@ -16,11 +16,11 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{details.ChittyNumber}}</td>
-                <td>{{details.chittaalNumber}}</td>
-                <td>{{MonthlyInstallment}}</td>
-                <td>{{NumberOfMonths}}</td>
-                <td>{{Sala}}</td>
+                <td>{{chitDetails.ChittyNumber}}</td>
+                <td>{{clientDetails.chittaalNumber}}</td>
+                <td>Rs {{chitDetails.MonthlyInstallment}}</td>
+                <td>{{chitDetails.NumberOfMonths}}</td>
+                <td>Rs {{chitDetails.Sala}}</td>
             </tr>
         </tbody>
 
@@ -41,13 +41,13 @@
      
 
   <tbody>
-    {{#each detail}}
+    {{#each instdetails}}
    
     <tr>
       <th scope="row">{{this.Installment}}</th>
-      <td>{{this.Amount}}</td>
+      <td>Rs {{this.Amount}}</td>
       
-      <td ><a class="btn text-danger" href="/admin/changePaymentstatus?id={{this._id}}">Pending</a></td> 
+      <td class="text-danger" >{{this.PaymentStatus}}</td> 
       
       <td>{{this.Date}} {{this.Month}} {{this.Year}}</td>
      

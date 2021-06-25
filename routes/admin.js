@@ -100,24 +100,24 @@ router.get('/viewClientDetails/', async (req, res) => {
   let Sala=chitDetails.Sala
   
   console.log('hmm');
-  if(typeof detail=="undefined"){
-    console.log('ayyo');
+  //if(typeof detail=="undefined"){
+   // console.log('ayyo');
   
     
-     console.log(chitDetails);
+  //   console.log(chitDetails);
    
-    res.render('admin/clientDetails', { admin: true, details, MonthlyInstallment, NumberOfMonths, Sala  })
-  }else{
+   // res.render('admin/clientDetails', { admin: true, details, MonthlyInstallment, NumberOfMonths, Sala  })
+ // }else{
 
  // let MonthlyInstallment = detail[0].MonthlyInstallment
   //let NumberOfMonths = detail[0].NumberOfMonths
   //let Sala = detail[0].Sala
-  console.log('gethiked');
+ // console.log('gethiked');
  
     
 
   res.render('admin/clientDetails', { admin: true, detail, details, MonthlyInstallment, NumberOfMonths, Sala })
-}
+//}
 
 })
 router.get('/addInstallment/', (req, res) => {

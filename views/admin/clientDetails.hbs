@@ -18,9 +18,9 @@
             <tr>
                 <td>{{details.ChittyNumber}}</td>
                 <td>{{details.chittaalNumber}}</td>
-                <td>{{MonthlyInstallment}}</td>
+                <td>Rs {{MonthlyInstallment}}</td>
                 <td>{{NumberOfMonths}}</td>
-                <td>{{Sala}}</td>
+                <td>Rs {{Sala}}</td>
             </tr>
         </tbody>
 
@@ -45,7 +45,7 @@
    
     <tr>
       <th scope="row">{{this.Installment}}</th>
-      <td>{{this.Amount}}</td>
+      <td>Rs {{this.Amount}}</td>
       
       <td ><a class="btn text-danger" href="/admin/changePaymentstatus?id={{this._id}}">{{this.PaymentStatus}}</a></td> 
       

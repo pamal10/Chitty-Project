@@ -1,6 +1,6 @@
 <div class="container">
     <div>
-        <form action="/searchDetails" class="m-5">
+        <form action="/" class="m-5" method="POST">
             <div class="form-group row">
                 <label for="chittaalNumber" class="col-sm-2 col-form-label">Chitty Number</label>
                 <div class="col-sm-10">
@@ -21,4 +21,7 @@
             
         </form>
     </div>
+    {{#if error}}
+    <h5 class="text-danger">Invalid Input</h5>
+    {{/if}}
 </div>
