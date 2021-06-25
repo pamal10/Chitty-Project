@@ -170,4 +170,17 @@ router.get('/changePayStatus/',(req,res)=>{
     res.redirect('/admin/viewClientDetails?id='+clientId)
   })
 })
+router.get('/changetoPriced',(req,res)=>{
+  clientId=req.query.id
+  console.log(clientId);
+  chitHelpers.changeToPriced(clientId).then(()=>{
+    res.redirect('/admin/viewClients?id=' + chittyNo)
+  })
+})
+router.get('/changetononPriced',(req,res)=>{
+  clientId=req.query.id
+  chitHelpers.changeToNonPriced(clientId).then(()=>{
+    res.redirect('/admin/viewClients?id=' + chittyNo)
+  })
+})
 module.exports = router;

@@ -47,7 +47,14 @@
       <th scope="row">{{this.Installment}}</th>
       <td>Rs {{this.Amount}}</td>
       
-      <td class="text-danger" >{{this.PaymentStatus}}</td> 
+      
+      {{#ifEquals  this.PaymentStatus "Pending"}}
+      
+      <td class=" text-danger">{{this.PaymentStatus}}</td>
+        {{/ifEquals}}
+        {{#ifnotEquals this.PaymentStatus "Paid"}}
+      <td class=" text-success">{{this.PaymentStatus}}</td>
+     {{/ifnotEquals}}
       
       <td>{{this.Date}} {{this.Month}} {{this.Year}}</td>
      

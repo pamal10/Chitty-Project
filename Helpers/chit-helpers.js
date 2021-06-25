@@ -65,7 +65,8 @@ module.exports = {
     addClient: (chittyNo, data) => {
         return new Promise((resolve, reject) => {
             data.ChittyNumber = chittyNo
-            
+            data.PricedStatus = "Non-Priced"
+
             db.get().collection(collection.CLIENTS_COLLECTION).insertOne(data).then(() => {
                 resolve()
             })
@@ -80,7 +81,7 @@ module.exports = {
     getClientDetails: (clientId) => {
         return new Promise(async (resolve, reject) => {
             await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ _id: objectId(clientId) }).then((details) => {
-                
+
 
                 console.log(details);
                 resolve(details)
@@ -126,7 +127,7 @@ module.exports = {
     },
     addInstallment: (chittyNo, data) => {
         return new Promise(async (resolve, reject) => {
-            
+
             let chitdetails = await db.get().collection(collection.CHIT_COLLECTION).findOne({ ChittyNumber: chittyNo })
 
             //for(let i=0;i<=l;i++){
@@ -134,45 +135,45 @@ module.exports = {
 
             //  
 
-             let  MonthlyInstallment = chitdetails.MonthlyInstallment
-               let  NumberOfMonths = chitdetails.NumberOfMonths
-             let   Sala = chitdetails.Sala
-             let  Date = chitdetails.DateOfChitty
+            let MonthlyInstallment = chitdetails.MonthlyInstallment
+            let NumberOfMonths = chitdetails.NumberOfMonths
+            let Sala = chitdetails.Sala
+            let Date = chitdetails.DateOfChitty
 
             let ChittyNumber = chitdetails.ChittyNumber
-            let Year= data.Year
-            let Installment= data.Installment
-            let Month=data.Month
-           let Amount=data.Amount
+            let Year = data.Year
+            let Installment = data.Installment
+            let Month = data.Month
+            let Amount = data.Amount
 
-               let detail= await db.get().collection(collection.CLIENTS_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
-                let l=detail.length
-               
-                console.log('hi');
-                console.log(l);
-              let details={}
-                for(let i=0;i<l;i++){
-                    details={
-                        
-                        clientId: detail[i]._id,
-                        ChittyNumber: ChittyNumber,
-                        Installment:Installment,
-                        Amount:Amount,
-                        Month:Month,
-                        Year:Year,
-                        Date:Date,
-                        MonthlyInstallment:MonthlyInstallment,
-                        NumberOfMonths:NumberOfMonths,
-                        Sala:Sala,
-                        PaymentStatus: 'Pending'
-                    }
-                    console.log('loop over');
-                    db.get().collection(collection.INSTALLMENT_COLLECTION).insert(details)
-                    console.log('hello');
-                   }
-               
-                resolve()
-          //  })
+            let detail = await db.get().collection(collection.CLIENTS_COLLECTION).find({ ChittyNumber: chittyNo }).toArray()
+            let l = detail.length
+
+            console.log('hi');
+            console.log(l);
+            let details = {}
+            for (let i = 0; i < l; i++) {
+                details = {
+
+                    clientId: detail[i]._id,
+                    ChittyNumber: ChittyNumber,
+                    Installment: Installment,
+                    Amount: Amount,
+                    Month: Month,
+                    Year: Year,
+                    Date: Date,
+                    MonthlyInstallment: MonthlyInstallment,
+                    NumberOfMonths: NumberOfMonths,
+                    Sala: Sala,
+                    PaymentStatus: 'Pending'
+                }
+                console.log('loop over');
+                db.get().collection(collection.INSTALLMENT_COLLECTION).insert(details)
+                console.log('hello');
+            }
+
+            resolve()
+            //  })
         })
     },
     getLastInstallment: (chittyNo) => {
@@ -186,7 +187,7 @@ module.exports = {
     },
     editInstallment: (chittyNo, data) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collection.INSTALLMENT_COLLECTION).updateMany({ChittyNumber: chittyNo }, {
+            db.get().collection(collection.INSTALLMENT_COLLECTION).updateMany({ ChittyNumber: chittyNo }, {
                 $set: {
                     Installment: data.Installment,
                     Amount: data.Amount,
@@ -199,44 +200,65 @@ module.exports = {
             })
         })
     },
-    getCompleteDetails:(clientID)=>{
-      return new Promise(async(resolve,reject)=>{
-     
-      console.log('Enthuv'+clientID);
-     let detail=await db.get().collection(collection.INSTALLMENT_COLLECTION).find({clientId:objectId(clientID)}).toArray()
-    
-     console.log(detail);
-     console.log('kazhinj');
-     
-                   resolve(detail)
-                
-     
+    getCompleteDetails: (clientID) => {
+        return new Promise(async (resolve, reject) => {
+
+            console.log('Enthuv' + clientID);
+            let detail = await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ clientId: objectId(clientID) }).toArray()
+
+            console.log(detail);
+            console.log('kazhinj');
+
+            resolve(detail)
+
+
         })
     },
-   changePaymentStatus:(instId)=>{
-       return new Promise((resolve,reject)=>{
-           db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({_id:objectId(instId)},{
-               $set:{
-                   PaymentStatus: 'Paid'
-               }
-           }).then(()=>{
-               resolve()
-           })
-       })
-   },
-   changePayStatus:(instId)=>{
-    return new Promise((resolve,reject)=>{
-        db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({_id:objectId(instId)},{
-            $set:{
-                PaymentStatus: 'Pending'
-            }
-        }).then(()=>{
-            resolve()
+    changePaymentStatus: (instId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({ _id: objectId(instId) }, {
+                $set: {
+                    PaymentStatus: 'Paid'
+                }
+            }).then(() => {
+                resolve()
+            })
         })
-    })
-},
+    },
+    changePayStatus: (instId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({ _id: objectId(instId) }, {
+                $set: {
+                    PaymentStatus: 'Pending'
+                }
+            }).then(() => {
+                resolve()
+            })
+        })
+    },
+    changeToPriced:(clientId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CLIENTS_COLLECTION).updateOne({_id:objectId(clientId)},{
+                $set:{
+                    PricedStatus:"Priced"
+                }
+            }).then(()=>{
+                resolve()
+            })
+        })
+    },
+    changeToNonPriced:(clientId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.CLIENTS_COLLECTION).updateOne({_id:objectId(clientId)},{
+                $set:{
+                    PricedStatus:"Non-Priced"
+                }
+            }).then(()=>{
+                resolve()
+            })
+        })
+    },
 
-   
 
 
 
@@ -244,21 +266,22 @@ module.exports = {
 
 
 
-    getUserDetails:(data)=>{
-        return new Promise(async(resolve,reject)=>{
-            let chittyNo=data.ChittyNumber
-            let chittaalNo=data.chittaalNumber
+
+    getUserDetails: (data) => {
+        return new Promise(async (resolve, reject) => {
+            let chittyNo = data.ChittyNumber
+            let chittaalNo = data.chittaalNumber
             console.log(chittyNo);
             console.log(chittaalNo);
-            
-          await  db.get().collection(collection.CLIENTS_COLLECTION).findOne({ChittyNumber:chittyNo,chittaalNumber:chittaalNo}).then((clientDetails)=>{
-              console.log(clientDetails);
+
+            await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ ChittyNumber: chittyNo, chittaalNumber: chittaalNo }).then((clientDetails) => {
+                console.log(clientDetails);
                 resolve(clientDetails)
             })
         })
     },
-    
-    
+
+
 
 
 }
