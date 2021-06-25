@@ -134,59 +134,45 @@ module.exports = {
 
             //  
 
-            data.MonthlyInstallment = chitdetails.MonthlyInstallment,
-                data.NumberOfMonths = chitdetails.NumberOfMonths,
-                data.Sala = chitdetails.Sala
+             let  MonthlyInstallment = chitdetails.MonthlyInstallment
+               let  NumberOfMonths = chitdetails.NumberOfMonths
+             let   Sala = chitdetails.Sala
+             let  Date = chitdetails.DateOfChitty
 
-            data.Date = chitdetails.DateOfChitty,
+            let ChittyNumber = chitdetails.ChittyNumber
+            let Year= data.Year
+            let Installment= data.Installment
+            let Month=data.Month
+           let Amount=data.Amount
 
-                
-
-
-                data.ChittyNumber = chitdetails.ChittyNumber,
-
-
-                
-            data.Date = chitdetails.DateOfChitty
-            console.log('avasanam');
-
-            db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(async(instDetails) => {
-                let installment=instDetails.ops[0].Installment
-                let amount =instDetails.ops[0].Amount
-                let instId=instDetails.ops[0]._id
-                let month=instDetails.ops[0].Month
-                let year=instDetails.ops[0].Year
-                let date=instDetails.ops[0].Date
-                let monthly=instDetails.ops[0].MonthlyInstallment
-                let tmonths=instDetails.ops[0].NumberOfMonths
-                let sala=instDetails.ops[0].Sala
-                let detail= await db.get().collection(collection.CLIENTS_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
+               let detail= await db.get().collection(collection.CLIENTS_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
                 let l=detail.length
                
                 console.log('hi');
                 console.log(l);
-              let data={}
+              let details={}
                 for(let i=0;i<l;i++){
-                    data={
-                        installId:instId,
+                    details={
+                        
                         clientId: detail[i]._id,
-                        Installment:installment,
-                        Amount:amount,
-                        Month:month,
-                        Year:year,
-                        Date:date,
-                        MonthlyInstallment:monthly,
-                        NumberOfMonths:tmonths,
-                        Sala:sala,
+                        ChittyNumber: ChittyNumber,
+                        Installment:Installment,
+                        Amount:Amount,
+                        Month:Month,
+                        Year:Year,
+                        Date:Date,
+                        MonthlyInstallment:MonthlyInstallment,
+                        NumberOfMonths:NumberOfMonths,
+                        Sala:Sala,
                         PaymentStatus: 'Pending'
                     }
                     console.log('loop over');
-                    db.get().collection(collection.PAYMENT_COLLECTION).insert(data)
+                    db.get().collection(collection.INSTALLMENT_COLLECTION).insert(details)
                     console.log('hello');
                    }
                
                 resolve()
-            })
+          //  })
         })
     },
     getLastInstallment: (chittyNo) => {
@@ -198,9 +184,9 @@ module.exports = {
             resolve(lastInstall)
         })
     },
-    editInstallment: (installId, data) => {
+    editInstallment: (chittyNo, data) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({ _id: objectId(installId) }, {
+            db.get().collection(collection.INSTALLMENT_COLLECTION).updateMany({ChittyNumber: chittyNo }, {
                 $set: {
                     Installment: data.Installment,
                     Amount: data.Amount,
@@ -217,7 +203,7 @@ module.exports = {
       return new Promise(async(resolve,reject)=>{
      
       console.log('Enthuv'+clientID);
-     let detail=await db.get().collection(collection.PAYMENT_COLLECTION).find({clientId:objectId(clientID)}).toArray()
+     let detail=await db.get().collection(collection.INSTALLMENT_COLLECTION).find({clientId:objectId(clientID)}).toArray()
     
      console.log(detail);
      console.log('kazhinj');

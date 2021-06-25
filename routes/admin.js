@@ -156,9 +156,10 @@ router.get('/editInstall/', (req, res) => {
     res.render('admin/editInstallment', { admin: true, lastInstall })
   })
 })
-router.post('/editInstall', (req, res) => {
-  installId = req.query.id
-  chitHelpers.editInstallment(installId, req.body).then(() => {
+router.post('/editInstall/', (req, res) => {
+  chittyNo = req.query.id
+  console.log(req.body);
+  chitHelpers.editInstallment(chittyNo, req.body).then(() => {
     res.redirect('/admin/viewClients?id=' + chittyNo)
   })
 })
