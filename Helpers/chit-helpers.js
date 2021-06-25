@@ -143,9 +143,30 @@ module.exports = {
 
                 
             data.Date = chitdetails.DateOfChitty
+            console.log('avasanam');
 
-            db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(() => {
-
+            db.get().collection(collection.INSTALLMENT_COLLECTION).insertOne(data).then(async(instDetails) => {
+                console.log('enthond');
+                let length= instDetails.length
+                console.log('ayyi');
+                console.log(instDetails);
+                let instId=instDetails.ops[0]._id
+                let detail= await db.get().collection(collection.CLIENTS_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
+                let l=detail.length
+               
+                console.log('hi');
+                console.log(l);
+              let data={}
+                for(let i=0;i<l;i++){
+                    data={
+                        installId:instId,
+                        clientId: detail[i]._id,
+                        PaymentStatus: 'Pending'
+                    }
+                    console.log('loop over');
+                    db.get().collection(collection.PAYMENT_COLLECTION).insert(data)
+                    console.log('hello');
+                   }
                
                 resolve()
             })
@@ -182,23 +203,11 @@ module.exports = {
       let clientID= clientDetails._id
       
      let detail= await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
-     let l=detail.length
-     console.log('hi');
-     console.log(l);
-   let data={}
-     for(let i=0;i<l;i++){
-         data={
-             installId:detail[i]._id,
-             clientId: clientID,
-             PaymentStatus: 'Pending'
-         }
-         console.log('loop over');
-         db.get().collection(collection.PAYMENT_COLLECTION).insertOne(data)
-         console.log('hello');
-        }
+    
         
      
                    resolve(detail)
+                   console.log(detail);
                    console.log('kazhinj');
       })
         })
@@ -209,6 +218,21 @@ module.exports = {
               let Status= detail.PaymentStatus
               resolve(Status)
           })
+        })
+    },
+    changePaymentStatus:(instId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.PAYMENT_COLLECTION).updateOne({installId:objectId(instId)},{
+                $set: {
+                    PaymentStatus: 'Paid'
+
+                }
+                
+            }).then(()=>{
+                console.log('eduth');
+                resolve()
+            })
+                
         })
     }
     

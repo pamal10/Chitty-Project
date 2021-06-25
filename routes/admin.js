@@ -1,4 +1,5 @@
 var express = require('express');
+const { getPaymentStatus } = require('../Helpers/chit-helpers');
 const chitHelpers = require('../Helpers/chit-helpers');
 var router = express.Router();
 
@@ -90,11 +91,14 @@ router.get('/viewClientDetails/', async (req, res) => {
   let detail = await chitHelpers.getCompleteDetails(clientId)
   console.log(clientId);
   let details = await chitHelpers.getClientDetails(clientId)
- 
-   
+  console.log('hmm');
   let MonthlyInstallment = detail[0].MonthlyInstallment
   let NumberOfMonths = detail[0].NumberOfMonths
   let Sala = detail[0].Sala
+  console.log('gethiked');
+ 
+    
+
   res.render('admin/clientDetails', { admin: true, detail, details, MonthlyInstallment, NumberOfMonths, Sala })
 
 
@@ -114,7 +118,7 @@ router.get('/addInstallment/', (req, res) => {
     if (typeof lastInstall == "undefined") {
       console.log('hello');
 
-      res.render('admin/addInstallment', { admin: true, chittyNo, install: false, Month })
+      res.render('admin/addInstallment', { admin: true, chittyNo,Year, install: false, Month })
     } else {
       let inst = lastInstall.Installment
       let installment = parseInt(inst) + 1
@@ -139,6 +143,12 @@ router.post('/editInstall', (req, res) => {
   installId = req.query.id
   chitHelpers.editInstallment(installId, req.body).then(() => {
     res.redirect('/admin/viewClients?id=' + chittyNo)
+  })
+})
+router.get('/changePaymentStatus/',(req,res)=>{
+  instId=req.query.id
+  chitHelpers.changePaymentStatus(clientId).then(()=>{
+    res.redirect('/viewClientDetails?id='+clientId)
   })
 })
 module.exports = router;
