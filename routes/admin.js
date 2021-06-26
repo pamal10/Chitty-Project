@@ -64,7 +64,15 @@ router.get('/viewClients/', (req, res) => {
 })
 router.get('/addClient', (req, res) => {
   chittyNo = req.query.id
-  res.render('admin/addClient', { admin: true, chittyNo })
+  chitHelpers.LastChittaalNumber(chittyNo).then((LastMan)=>{
+    if(typeof LastMan == "undefined"){
+      res.render('admin/addClient', { admin: true, chittyNo ,next:false})
+}else{
+  let LastNumber =LastMan.chittaalNumber
+         let nextMan=parseInt(LastNumber)+1
+    res.render('admin/addClient', { admin: true, chittyNo ,next:true,nextMan})
+}
+})
 })
 router.post('/addClient/', (req, res) => {
   chittyNo = req.query.id

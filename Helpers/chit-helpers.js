@@ -177,7 +177,7 @@ module.exports = {
                 db.get().collection(collection.INSTALLMENT_COLLECTION).insert(details)
                 console.log('hello');
             }
-
+       
             resolve()
             //  })
         })
@@ -262,6 +262,14 @@ module.exports = {
             }).then(() => {
                 resolve()
             })
+        })
+    },
+    LastChittaalNumber:(chittyNo)=>{
+        return new Promise(async(resolve,reject)=>{
+         let details  = await db.get().collection(collection.CLIENTS_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
+         let lastMan= details[details.length - 1]
+         
+         resolve(lastMan)
         })
     },
 
