@@ -136,9 +136,7 @@ module.exports = {
 
             let chitdetails = await db.get().collection(collection.CHIT_COLLECTION).findOne({ ChittyNumber: chittyNo })
 
-            //for(let i=0;i<=l;i++){
-
-
+        
             //  
 
             let MonthlyInstallment = chitdetails.MonthlyInstallment
@@ -175,9 +173,25 @@ module.exports = {
                 }
                 console.log('loop over');
                 db.get().collection(collection.INSTALLMENT_COLLECTION).insert(details)
+               
                 console.log('hello');
             }
-       
+         
+         
+            for(i=0;i<l;i++){
+            if(detail[i].PricedStatus=="Priced"){
+            let clientID=detail[i]._id
+           
+            amount=chitdetails.MonthlyInstallment
+            let install =Installment
+            console.log(chittyNo)
+       db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({clientId:objectId(clientID),ChittyNumber:chittyNo,Installment:install,PaymentStatus:"Pending"},{
+           $set:{
+               Amount:amount
+           }
+       })
+    }
+}
             resolve()
             //  })
         })
