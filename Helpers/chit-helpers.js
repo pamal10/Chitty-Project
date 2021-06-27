@@ -2,6 +2,7 @@ var db = require('../config/connection')
 var collection = require('../config/collections')
 var Promise = require('promise')
 var objectId = require('mongodb').ObjectID
+var bcrypt = require('bcrypt')
 const { LengthRequired } = require('http-errors')
 
 module.exports = {
@@ -308,7 +309,27 @@ module.exports = {
             })
         })
     },
+    doLogin: (userData) => {
+        let response = {}
+        return new Promise(async (resolve, reject) => {
 
+            let user = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: userData.UserName })
+            if (user) {
+                bcrypt.compare(userData.Password, user.Password).then((status) => {
+                    if (status) {
+                        response.admin = user
+                        response.status = true
+                        resolve(response)
+                    } else {
+                        resolve({ status: false })
+                    }
+                })
+
+            } else {
+                resolve({ status: false })
+            }
+        })
+    },
 
 
 

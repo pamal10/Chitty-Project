@@ -11,7 +11,7 @@ Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-
+if(req.session.admin){
   chitHelpers.getAllchits().then((details) => {
     detailsLength = Object.keys(details).length
 
@@ -20,14 +20,19 @@ router.get('/', function (req, res, next) {
 
     //   } else {
     res.render('admin/admin-home', { admin: true, details });
-
+  
     //  }
   })
-
+}else{
+  res.redirect('/admin/login')
+}
 });
 router.get('/AddnewChit', (req, res) => {
-
+  if(req.session.admin){
   res.render('admin/new-chitForm', { admin: true })
+}else{
+  res.redirect('/admin/login')
+}
 })
 router.post('/AddnewChit', (req, res) => {
   console.log(req.body)
@@ -188,4 +193,32 @@ router.get('/changetononPriced',(req,res)=>{
     res.redirect('/admin/viewClients?id=' + chittyNo)
   })
 })
+
+
+
+router.get('/login',(req,res)=>{
+  res.render('admin/loginForm',{admin:true})
+})
+router.post('/login',(req,res)=>{
+  chitHelpers.doLogin(req.body).then((response) => {
+    if (response.status) {
+
+      req.session.admin = response.admin
+      req.session.adminLoggedIn = true
+      res.redirect('/admin')
+    } else {
+      //req.session.adminLoginErr = true
+      //res.redirect('/login')
+      alert('No Match Found!')
+      res.redirect('/admin/login')
+    }
+  })
+})
+router.get('/Logout', (req, res) => {
+  req.session.admin = null
+  req.session.adminLoggedin = false
+  res.redirect('/admin/login')
+})
+    
+  
 module.exports = router;
