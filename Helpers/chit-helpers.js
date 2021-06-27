@@ -137,7 +137,7 @@ module.exports = {
 
             let chitdetails = await db.get().collection(collection.CHIT_COLLECTION).findOne({ ChittyNumber: chittyNo })
 
-        
+
             //  
 
             let MonthlyInstallment = chitdetails.MonthlyInstallment
@@ -174,25 +174,25 @@ module.exports = {
                 }
                 console.log('loop over');
                 db.get().collection(collection.INSTALLMENT_COLLECTION).insert(details)
-               
+
                 console.log('hello');
             }
-         
-         
-            for(i=0;i<l;i++){
-            if(detail[i].PricedStatus=="Priced"){
-            let clientID=detail[i]._id
-           
-            amount=chitdetails.MonthlyInstallment
-            let install =Installment
-            console.log(chittyNo)
-       db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({clientId:objectId(clientID),ChittyNumber:chittyNo,Installment:install,PaymentStatus:"Pending"},{
-           $set:{
-               Amount:amount
-           }
-       })
-    }
-}
+
+
+            for (i = 0; i < l; i++) {
+                if (detail[i].PricedStatus == "Priced") {
+                    let clientID = detail[i]._id
+
+                    amount = chitdetails.MonthlyInstallment
+                    let install = Installment
+                    console.log(chittyNo)
+                    db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({ clientId: objectId(clientID), ChittyNumber: chittyNo, Installment: install, PaymentStatus: "Pending" }, {
+                        $set: {
+                            Amount: amount
+                        }
+                    })
+                }
+            }
             resolve()
             //  })
         })
@@ -279,12 +279,12 @@ module.exports = {
             })
         })
     },
-    LastChittaalNumber:(chittyNo)=>{
-        return new Promise(async(resolve,reject)=>{
-         let details  = await db.get().collection(collection.CLIENTS_COLLECTION).find({ChittyNumber:chittyNo}).toArray()
-         let lastMan= details[details.length - 1]
-         
-         resolve(lastMan)
+    LastChittaalNumber: (chittyNo) => {
+        return new Promise(async (resolve, reject) => {
+            let details = await db.get().collection(collection.CLIENTS_COLLECTION).find({ ChittyNumber: chittyNo }).toArray()
+            let lastMan = details[details.length - 1]
+
+            resolve(lastMan)
         })
     },
 
@@ -330,7 +330,40 @@ module.exports = {
             }
         })
     },
+    updatePassword: (data) => {
+        return new Promise(async (resolve, reject) => {
+            console.log('hi');
+            let username = data.UserName
+            let Oldpassword = data.OldPassword
+            console.log(username);
+            console.log(Oldpassword);
+            console.log(data.NewPassword);
+            data.NewPassword = await bcrypt.hash(data.NewPassword, 10)
+            console.log(data.NewPassword);
+         let details=await   db.get().collection(collection.ADMIN_COLLECTION).findOne({ UserName: username })
+                if (details) {
+                    bcrypt.compare(Oldpassword, details.Password).then((status)=>{
+                    if(status){
+                        db.get().collection(collection.ADMIN_COLLECTION).updateOne({UserName:username},{
+                            $set:{
+                                Password:data.NewPassword
+                            }
+                           
+                        })                  
+                        resolve({status:true})  
+                }else{
+                    resolve({status:false})
+                }
+                
+            })
+        }else{
+                console.log('maatiyallo');
+                resolve({status:false})
+            }
+            })
+       
 
+    }
 
 
 }

@@ -11,7 +11,12 @@
             <a class="nav-item nav-link" href="#">2</a>
         </div>
     </div>
+    {{#if adminlogged}}
     <div>
         <a class="nav-item nav-link" href="/admin/Logout">Logout</a>
     </div>
+    <div>
+        <a class="nav-item nav-link" href="/admin/UpdatePasswordName">Change Password</a>
+    </div>
+    {{/if}}
 </nav>
