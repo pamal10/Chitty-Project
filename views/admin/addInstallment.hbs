@@ -1,74 +1,83 @@
-<div class="conatainer">
-    <form class="mt-5" action="/admin/addInstallment?id={{chittyNo}}" method="POST"> 
-        <div class="form-group row">
-            <label for="installment"  class="col-sm-2 col-form-label">Installment</label>
-            {{#if install}}
-            <div class="col-sm-10">
-                <input type="number" class="form-control w-50" value="{{installment}}" name="Installment" id="installment" placeholder="">
-            </div>
-            {{else}}
-             <div class="col-sm-10">
-                <input type="number" class="form-control w-50" value="1" name="Installment" id="installment" placeholder="">
-            </div>
-            {{/if}}
-        </div>
-        <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label">Amount</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control w-50" name="Amount" id="amount" placeholder="">
-            </div>
-        </div>
-         <div class="form-group row">
-            <label for="month" class="col-sm-2 col-form-label">Month</label>
-            <div class="col-sm-10">
-                
-                <select name="Month" id="month">
-                    <option >{{Month}}</option>
-                    <option >January</option>
-                    <option >February</option>
-                    <option >March</option>
-                    <option >April</option>
-                    <option >May</option>
-                    <option >June</option>
-                    <option >July</option>
-                    <option >August</option>
-                    <option >September</option>
-                    <option >October</option>
-                    <option >November</option>
-                    <option >December</option>
-                </select>
-            </div>
-        </div>
+<section>
+    <div class="conatainer">
+        <div class="row">
+            <div class="col-md-4 col-xs-5"></div>
+            <form class="mt-5 col-md-6" action="/admin/addInstallment?id={{chittyNo}}" method="POST">
+                <div class="form-row">
+                    <div class="form-group col-md-10">
+                        <label for="installment" class=" col-form-label">Installment</label>
+                        {{#if install}}
+                        
+                            <input type="number" class="form-control w-50" value="{{installment}}" name="Installment"
+                                id="installment" placeholder="">
+                        
+                        {{else}}
+                        
+                            <input type="number" class="form-control w-50" value="1" name="Installment" id="installment"
+                                placeholder="">
+                        
+                        {{/if}}
+                    </div>
+                    <div class="form-group col-md-10">
+                        <label for="name" class=" col-form-label">Amount</label>
+                        <div class=" ">
+                            <input type="number" class="form-control w-50" name="Amount" id="amount" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group  col-md-3">
+                        <label for="month" class="col-form-label">Month</label>
 
-         <div class="form-group row">
-            <label for="year" class="col-sm-2 col-form-label">Year</label>
-            <div class="col-sm-10">
-                
-                <select name="Year" id="month">
-                    <option >{{Year}}</option>
-                    <option >2021</option>
-                    <option >2022</option>
-                    <option >2023</option>
-                    <option >2024</option>
-                    <option >2025</option>
-                    <option >2026</option>
-                    <option >2027</option>
-                    <option >2028</option>
-                    <option >2029</option>
-                    <option >2030</option>
-                    <option >2031</option>
-                    <option >2032</option>
-                </select>
-            </div>
-        </div>
-     
-       
-        <div class="form-group row">
-           <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary ml-5">ADD</button>
-            </div>
-        </div>
-       
-    </form>
-</div>
+                        <div class="">
 
+                            <select name="Month" id="month">
+                                <option>{{Month}}</option>
+                                <option>January</option>
+                                <option>February</option>
+                                <option>March</option>
+                                <option>April</option>
+                                <option>May</option>
+                                <option>June</option>
+                                <option>July</option>
+                                <option>August</option>
+                                <option>September</option>
+                                <option>October</option>
+                                <option>November</option>
+                                <option>December</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3 ml-3">
+                        <label for="year" class=" col-form-label">Year</label>
+                        <div class="">
+
+                            <select name="Year" id="month" class="">
+                                <option>{{Year}}</option>
+                                <option>2021</option>
+                                <option>2022</option>
+                                <option>2023</option>
+                                <option>2024</option>
+                                <option>2025</option>
+                                <option>2026</option>
+                                <option>2027</option>
+                                <option>2028</option>
+                                <option>2029</option>
+                                <option>2030</option>
+                                <option>2031</option>
+                                <option>2032</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row col-md-10 mt-4 ">
+                        
+                        <div class="">
+                            <button type="submit" class=" btn btn-primary ml-5">ADD INSTALLMENT</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
