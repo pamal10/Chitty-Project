@@ -363,7 +363,21 @@ module.exports = {
             })
        
 
+    },
+    ViewAdmin:()=>{
+        return new Promise(async(resolve,reject)=>{
+     let details=  await   db.get().collection(collection.ADMIN_COLLECTION).find().toArray()
+              resolve(details)
+         console.log(details);
+        })
+    },
+    Addadmin:(data)=>{
+        return new Promise(async(resolve,reject)=>{
+            data.Password = await bcrypt.hash(data.Password, 10)
+            db.get().collection(collection.ADMIN_COLLECTION).insertOne(data).then(()=>{
+                resolve()
+            })
+        })
     }
-
 
 }
