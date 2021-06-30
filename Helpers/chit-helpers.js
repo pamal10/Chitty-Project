@@ -71,7 +71,7 @@ module.exports = {
     addClient: (chittyNo, data) => {
         return new Promise((resolve, reject) => {
             data.ChittyNumber = chittyNo
-            data.PricedStatus = "Non-Priced"
+            data.PricedStatus = "Non-Prized"
 
             db.get().collection(collection.CLIENTS_COLLECTION).insertOne(data).then(() => {
                 resolve()
@@ -180,7 +180,7 @@ module.exports = {
 
 
             for (i = 0; i < l; i++) {
-                if (detail[i].PricedStatus == "Priced") {
+                if (detail[i].PricedStatus == "Prized") {
                     let clientID = detail[i]._id
 
                     amount = chitdetails.MonthlyInstallment
@@ -261,7 +261,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.CLIENTS_COLLECTION).updateOne({ _id: objectId(clientId) }, {
                 $set: {
-                    PricedStatus: "Priced"
+                    PricedStatus: "Prized"
                 }
             }).then(() => {
                 resolve()
@@ -272,7 +272,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.CLIENTS_COLLECTION).updateOne({ _id: objectId(clientId) }, {
                 $set: {
-                    PricedStatus: "Non-Priced"
+                    PricedStatus: "Non-Prized"
                 }
             }).then(() => {
                 resolve()

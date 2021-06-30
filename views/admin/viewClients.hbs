@@ -5,11 +5,12 @@
 </div>
 <div>
   <a href="/admin/addInstallment?id={{chittyNo}}" class="btn btn-info mt-3 ml-4">Add Installment</a>
-  <a href="/admin/editInstall?id={{chittyNo}}" class="btn btn-light mt-3">Edit Installment</a>
+  <a href="/admin/editInstall?id={{chittyNo}}" class="btn btn-light mt-3 ml-4">Edit Installment</a>
 </div>
 <div>
-  <div class="col-xm-12">
-  <table class="table mt-3 table-dark w-25 float-left">
+  <div class="col-xm-12" style="width: 75rem;" >
+  
+  <table class="table mt-3 table-dark w-25 float-left ml-4 " >
   <td class="text-center ">Chitty Number  : {{chittyNo}}</td>
   </table>
   </div>
@@ -25,7 +26,7 @@
 
           <th scope="col">Chittaal Number</th>
           <th scope="col">Name</th>
-          <th scope="col">Priced/Non-Priced</th>
+          <th scope="col">Prized/Non-Prized</th>
           <th scope="col">Options</th>
 
 
@@ -42,14 +43,14 @@
           </td>
         
           <td>{{this.name}}</td>
-          {{#ifEquals this.PricedStatus "Non-Priced"}}
+          {{#ifEquals this.PricedStatus "Non-Prized"}}
           <td><a class="btn text-dark" onclick="return confirm('Changing To Priced')" href="/admin/changetoPriced?id={{this._id}}">{{this.PricedStatus}}</a></td>
           {{/ifEquals}}
-          {{#ifEquals this.PricedStatus "Priced"}}
+          {{#ifEquals this.PricedStatus "Prized"}}
           <td><a class="btn text-success" onclick="return confirm('Changing To Non-Priced')" href="/admin/changetononPriced?id={{this._id}}">{{this.PricedStatus}}</a></td>
           {{/ifEquals}}
 
-          <td><a href="/admin/EditClient?id={{this._id}}" class="btn btn-warning">Edit Client<a
+          <td><a href="/admin/EditClient?id={{this._id}}" class="btn btn-warning ml-1" style="width: 8rem;">Edit Client<a
                 href="/admin/DeleteClient?id={{this._id}}" class="btn btn-danger ml-1"
                 onclick="return confirm('Do you want to remove {{this.name}} with Chittaal Number {{this.chittaalNumber}} ?')">Remove
                 Client</a></a>
@@ -67,7 +68,8 @@
 <script>
   $(function () {
     $('#clients').DataTable({
-      "order": [[0, "asc"]]
+      "order": [[0, "asc"]],
+      responsive:true
     });
   });
 </script>
