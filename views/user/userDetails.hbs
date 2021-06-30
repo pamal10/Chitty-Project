@@ -89,6 +89,8 @@
   $(function () {
     $('#install').DataTable({
       "order": [[0, "asc"]],
+       "columnDefs": [
+        { "targets": [1,2,3], "searchable": false }],
       responsive:true
     });
   });

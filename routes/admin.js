@@ -116,20 +116,19 @@ router.get('/DeleteClient/', (req, res) => {
   })
 })
 router.get('/viewClientDetails/', async (req, res) => {
-  console.log('hi ' + req.query.id)
+  
   clientId = req.query.id
   let detail = await chitHelpers.getCompleteDetails(clientId)
-  console.log(clientId);
+ 
   let details = await chitHelpers.getClientDetails(clientId)
   let chittyNo = details.ChittyNumber
-  console.log(chittyNo);
+ 
   let chitDetails = await chitHelpers.getSingleChittyDetails(chittyNo)
-  console.log(chitDetails);
+  
   let MonthlyInstallment = chitDetails.MonthlyInstallment
   let NumberOfMonths = chitDetails.NumberOfMonths
   let Sala = chitDetails.Sala
 
-  console.log('hmm');
 
 
 
@@ -139,7 +138,7 @@ router.get('/viewClientDetails/', async (req, res) => {
 })
 router.get('/addInstallment/', (req, res) => {
   chittyNo = req.query.id
-  console.log('ivide ethi');
+ 
   chitHelpers.getLastInstallment(chittyNo).then((lastInstall) => {
 
 
@@ -150,7 +149,7 @@ router.get('/addInstallment/', (req, res) => {
     console.log(Month);
     // if (Object.keys(inst).length === 0 && inst.constructor === Object) {
     if (typeof lastInstall == "undefined") {
-      console.log('hello');
+     
 
       res.render('admin/addInstallment', { admin: true, chittyNo, Year, adminlogged: true, install: false, Month })
     } else {
@@ -168,14 +167,14 @@ router.post('/addInstallment/', (req, res) => {
 })
 router.get('/editInstall/', (req, res) => {
   chittyNo = req.query.id
-  console.log('ing poru');
+  
   chitHelpers.getLastInstallment(chittyNo).then((lastInstall) => {
     res.render('admin/editInstallment', { admin: true, adminlogged: true, lastInstall })
   })
 })
 router.post('/editInstall/', (req, res) => {
   chittyNo = req.query.id
-  console.log(req.body);
+  
   chitHelpers.editInstallment(chittyNo, req.body).then(() => {
     res.redirect('/admin/viewClients?id=' + chittyNo)
   })
@@ -194,7 +193,7 @@ router.get('/changePayStatus/', (req, res) => {
 })
 router.get('/changetoPriced', (req, res) => {
   clientId = req.query.id
-  console.log(clientId);
+  
   chitHelpers.changeToPriced(clientId).then(() => {
     res.redirect('/admin/viewClients?id=' + chittyNo)
   })

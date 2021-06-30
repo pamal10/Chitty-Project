@@ -11,7 +11,7 @@ module.exports = {
 
             let sala = parseInt(data.MonthlyInstallment) * parseInt(data.NumberOfMonths)
             data.Sala = sala
-            console.log(data);
+            
             db.get().collection(collection.CHIT_COLLECTION).insertOne(data).then(() => {
                 resolve()
             })
@@ -21,7 +21,7 @@ module.exports = {
 
         return new Promise(async (resolve, reject) => {
 
-            console.log('call');
+           
             let details = await db.get().collection(collection.CHIT_COLLECTION).find().toArray()
 
             resolve(details)
@@ -89,7 +89,7 @@ module.exports = {
             await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ _id: objectId(clientId) }).then((details) => {
 
 
-                console.log(details);
+                
                 resolve(details)
             })
         })
@@ -117,10 +117,9 @@ module.exports = {
     },
     getSingleChittyDetails: (chittyNo) => {
         return new Promise(async (resolve, reject) => {
-            console.log(chittyNo);
-            console.log('pull');
+            
             await db.get().collection(collection.CHIT_COLLECTION).findOne({ ChittyNumber: chittyNo }).then((detail) => {
-                console.log(detail);
+               
                 resolve(detail)
             })
         })
@@ -154,8 +153,7 @@ module.exports = {
             let detail = await db.get().collection(collection.CLIENTS_COLLECTION).find({ ChittyNumber: chittyNo }).toArray()
             let l = detail.length
 
-            console.log('hi');
-            console.log(l);
+           
             let details = {}
             for (let i = 0; i < l; i++) {
                 details = {
@@ -172,10 +170,10 @@ module.exports = {
                     Sala: Sala,
                     PaymentStatus: 'Pending'
                 }
-                console.log('loop over');
+              
                 db.get().collection(collection.INSTALLMENT_COLLECTION).insert(details)
 
-                console.log('hello');
+              
             }
 
 
@@ -185,7 +183,7 @@ module.exports = {
 
                     amount = chitdetails.MonthlyInstallment
                     let install = Installment
-                    console.log(chittyNo)
+                    
                     db.get().collection(collection.INSTALLMENT_COLLECTION).updateOne({ clientId: objectId(clientID), ChittyNumber: chittyNo, Installment: install, PaymentStatus: "Pending" }, {
                         $set: {
                             Amount: amount
@@ -202,7 +200,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let details = await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ ChittyNumber: chittyNo }).toArray()
             let lastInstall = details[details.length - 1]
-            console.log(lastInstall);
+            
             resolve(lastInstall)
         })
     },
@@ -224,11 +222,10 @@ module.exports = {
     getCompleteDetails: (clientID) => {
         return new Promise(async (resolve, reject) => {
 
-            console.log('Enthuv' + clientID);
+            
             let detail = await db.get().collection(collection.INSTALLMENT_COLLECTION).find({ clientId: objectId(clientID) }).toArray()
 
-            console.log(detail);
-            console.log('kazhinj');
+          
 
             resolve(detail)
 
@@ -300,11 +297,10 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let chittyNo = data.ChittyNumber
             let chittaalNo = data.chittaalNumber
-            console.log(chittyNo);
-            console.log(chittaalNo);
+           
 
             await db.get().collection(collection.CLIENTS_COLLECTION).findOne({ ChittyNumber: chittyNo, chittaalNumber: chittaalNo }).then((clientDetails) => {
-                console.log(clientDetails);
+                
                 resolve(clientDetails)
             })
         })
@@ -332,7 +328,7 @@ module.exports = {
     },
     updatePassword: (data) => {
         return new Promise(async (resolve, reject) => {
-            console.log('hi');
+           
             let username = data.UserName
             let Oldpassword = data.OldPassword
             console.log(username);
@@ -357,7 +353,7 @@ module.exports = {
                 
             })
         }else{
-                console.log('maatiyallo');
+                
                 resolve({status:false})
             }
             })
@@ -368,7 +364,7 @@ module.exports = {
         return new Promise(async(resolve,reject)=>{
      let details=  await   db.get().collection(collection.ADMIN_COLLECTION).find().toArray()
               resolve(details)
-         console.log(details);
+         
         })
     },
     Addadmin:(data)=>{

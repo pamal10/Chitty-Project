@@ -31,10 +31,10 @@ alert('             Invalid Input!        ')
 
   let chitDetails= await chitHelpers.getSingleChittyDetails(chittyNo)
   
- console.log('uff');
+ 
  let clientId= clientDetails._id
  let instdetails= await chitHelpers.getCompleteDetails(clientId)
-  console.log('ond');
+  
   res.render('user/userDetails',{clientDetails,instdetails,chitDetails})
 
 }
